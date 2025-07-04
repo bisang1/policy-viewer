@@ -72,7 +72,6 @@
       background-color: #4f46e5;
     }
 
-    /* Mobile responsive */
     @media (max-width: 480px) {
       body {
         padding: 16px;
@@ -99,28 +98,32 @@
   <div id="card-container">불러오는 중...</div>
 
   <script>
-    fetch("policy.json")
-      .then((res) => res.json())
-      .then((data) => {
+    // 🔐 아래 인증키와 API 주소를 네 것으로 바꿔
+    const apiUrl = "https://api.odcloud.kr/api/15077762/v1/policy?page=1&perPage=10&serviceKey=MAKe1tFPyEa%2F1GVivsRl7szAdbPyh9zKnQvjSq3hznBNc%2FgOat517%2FsrTFHPnppyBjFwQfwNtuIaRUXn2AyKng%3D%3D";
+
+    fetch(apiUrl)
+      .then(res => res.json())
+      .then(data => {
         const container = document.getElementById("card-container");
         container.innerHTML = "";
-        data.forEach((item) => {
+        const rows = data.data || data || []; // 실제 구조에 따라 조정
+
+        rows.forEach(item => {
           const card = document.createElement("div");
           card.className = "card";
           card.innerHTML = `
-            <div class="card-title">${item.정책명}</div>
-            <div class="meta">🏢 <span>기관:</span> ${item.기관명}</div>
-            <div class="meta">🗓️ <span>등록일:</span> ${item.등록일시}</div>
-            <div class="meta">👥 <span>대상:</span> ${item.지원대상}</div>
-            <div class="meta">✅ <span>신청:</span> ${item.신청방법}</div>
-            <a class="link" href="${item.홈페이지}" target="_blank">🔗 홈페이지 바로가기</a>
+            <div class="card-title">${item.정책명 || '정책명 없음'}</div>
+            <div class="meta">🏢 <span>기관:</span> ${item.기관명 || '-'}</div>
+            <div class="meta">🗓️ <span>등록일:</span> ${item.등록일시 || '-'}</div>
+            <div class="meta">👥 <span>대상:</span> ${item.지원대상 || '-'}</div>
+            <div class="meta">✅ <span>신청:</span> ${item.신청방법 || '-'}</div>
+            <a class="link" href="${item.홈페이지 || '#'}" target="_blank">🔗 홈페이지 바로가기</a>
           `;
           container.appendChild(card);
         });
       })
-      .catch((err) => {
-        document.getElementById("card-container").innerText =
-          "정책 데이터를 불러오지 못했습니다.";
+      .catch(err => {
+        document.getElementById("card-container").innerText = "정책 데이터를 불러오지 못했습니다.";
         console.error("Fetch 오류:", err);
       });
   </script>
