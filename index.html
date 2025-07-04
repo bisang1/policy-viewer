@@ -1,59 +1,88 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>정책 카드 자동 생성기</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: 'Malgun Gothic', sans-serif;
-      background: #f9f9f9;
-      padding: 20px;
-    }
-    .card {
-      background: #fff;
+      background-color: #f1f3f5;
+      margin: 0;
       padding: 16px;
-      margin-bottom: 12px;
-      border-radius: 10px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
     }
+
+    h2 {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    #card-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      padding: 20px;
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
     .card-title {
       font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 6px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #222;
     }
+
     .meta {
       font-size: 14px;
-      color: #444;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
+      color: #555;
     }
+
     .link {
       display: inline-block;
-      margin-top: 8px;
-      font-size: 14px;
-      color: #007aff;
+      margin-top: 12px;
+      padding: 8px 12px;
+      background-color: #007aff;
+      color: #fff;
       text-decoration: none;
+      font-size: 14px;
+      border-radius: 6px;
+      transition: background-color 0.2s;
     }
-    @media screen and (max-width: 480px) {
+
+    .link:hover {
+      background-color: #005fcc;
+    }
+
+    /* 모바일 대응 */
+    @media (max-width: 480px) {
       body {
         padding: 12px;
       }
+
       .card {
-        padding: 12px;
+        padding: 16px;
       }
+
       .card-title {
         font-size: 16px;
       }
-      .meta {
-        font-size: 13px;
-      }
+
+      .meta,
       .link {
         font-size: 13px;
       }
     }
-
-
-
   </style>
 </head>
 <body>
@@ -63,26 +92,27 @@
 
   <script>
     fetch("policy.json")
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         const container = document.getElementById("card-container");
         container.innerHTML = "";
-        data.forEach(item => {
+        data.forEach((item) => {
           const card = document.createElement("div");
           card.className = "card";
           card.innerHTML = `
             <div class="card-title">${item.정책명}</div>
-            <div class="meta">기관: ${item.기관명}</div>
-            <div class="meta">등록일: ${item.등록일시}</div>
-            <div class="meta">대상: ${item.지원대상}</div>
-            <div class="meta">신청: ${item.신청방법}</div>
-            <a class="link" href="${item.홈페이지}" target="_blank">🔗 홈페이지 이동</a>
+            <div class="meta">📌 기관: ${item.기관명}</div>
+            <div class="meta">🗓️ 등록일: ${item.등록일시}</div>
+            <div class="meta">👥 대상: ${item.지원대상}</div>
+            <div class="meta">✅ 신청: ${item.신청방법}</div>
+            <a class="link" href="${item.홈페이지}" target="_blank">🔗 홈페이지 바로가기</a>
           `;
           container.appendChild(card);
         });
       })
-      .catch(err => {
-        document.getElementById("card-container").innerText = "정책 데이터를 불러오지 못했습니다.";
+      .catch((err) => {
+        document.getElementById("card-container").innerText =
+          "정책 데이터를 불러오지 못했습니다.";
         console.error("Fetch 오류:", err);
       });
   </script>
