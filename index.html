@@ -7,67 +7,75 @@
   <style>
     body {
       font-family: 'Malgun Gothic', sans-serif;
-      background-color: #f1f3f5;
+      background-color: #f3f4f6;
       margin: 0;
-      padding: 16px;
+      padding: 24px;
     }
 
     h2 {
-      font-size: 22px;
+      font-size: 24px;
+      font-weight: 700;
+      color: #222;
       margin-bottom: 20px;
     }
 
     #card-container {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 20px;
     }
 
     .card {
-      background-color: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
       padding: 20px;
-      transition: transform 0.2s;
+      transition: transform 0.3s;
+      border-left: 5px solid #4f46e5;
     }
 
     .card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-3px);
     }
 
     .card-title {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 10px;
-      color: #222;
+      font-size: 20px;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 12px;
     }
 
     .meta {
       font-size: 14px;
-      margin-bottom: 6px;
-      color: #555;
+      margin-bottom: 8px;
+      color: #374151;
+      line-height: 1.5;
+    }
+
+    .meta span {
+      font-weight: 600;
+      color: #111827;
     }
 
     .link {
       display: inline-block;
-      margin-top: 12px;
-      padding: 8px 12px;
-      background-color: #007aff;
+      margin-top: 14px;
+      padding: 8px 14px;
+      background-color: #6366f1;
       color: #fff;
       text-decoration: none;
       font-size: 14px;
-      border-radius: 6px;
-      transition: background-color 0.2s;
+      border-radius: 8px;
     }
 
     .link:hover {
-      background-color: #005fcc;
+      background-color: #4f46e5;
     }
 
-    /* 모바일 대응 */
+    /* Mobile responsive */
     @media (max-width: 480px) {
       body {
-        padding: 12px;
+        padding: 16px;
       }
 
       .card {
@@ -75,7 +83,7 @@
       }
 
       .card-title {
-        font-size: 16px;
+        font-size: 18px;
       }
 
       .meta,
@@ -101,10 +109,10 @@
           card.className = "card";
           card.innerHTML = `
             <div class="card-title">${item.정책명}</div>
-            <div class="meta">📌 기관: ${item.기관명}</div>
-            <div class="meta">🗓️ 등록일: ${item.등록일시}</div>
-            <div class="meta">👥 대상: ${item.지원대상}</div>
-            <div class="meta">✅ 신청: ${item.신청방법}</div>
+            <div class="meta">🏢 <span>기관:</span> ${item.기관명}</div>
+            <div class="meta">🗓️ <span>등록일:</span> ${item.등록일시}</div>
+            <div class="meta">👥 <span>대상:</span> ${item.지원대상}</div>
+            <div class="meta">✅ <span>신청:</span> ${item.신청방법}</div>
             <a class="link" href="${item.홈페이지}" target="_blank">🔗 홈페이지 바로가기</a>
           `;
           container.appendChild(card);
